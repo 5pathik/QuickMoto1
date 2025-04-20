@@ -1,0 +1,26 @@
+.auth-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .auth-panel .auth-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  #closeAuthPanel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  

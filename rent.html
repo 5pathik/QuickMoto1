@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rent Now - QuickMoto</title>
+  
+  <link rel="stylesheet" href="styles/auth.css" />
+  <link rel="stylesheet" href="styles/rent.css" />
+  <link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-center">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="partner.html">Partner With Us</a>
+    </div>
+    <div class="nav-right">
+      <div id="userMenu" style="display: none;">
+        <span id="usernameDisplay"></span>
+        <div class="dropdown">
+          <button class="dropbtn">User ▾</button>
+          <div class="dropdown-content">
+            <a href="#">About User</a>
+            <a href="history.html">History</a>
+            <a href="#" id="logoutBtn">Logout</a>
+          </div>
+        </div>
+      </div>
+      <button id="openLogin">Sign In</button>
+    </div>
+  </header>
+
+  <!-- Blur overlay if not logged in -->
+  <div id="blurOverlay" class="blur-overlay">
+    <div class="login-warning">
+      <h2>Please Sign In to Proceed</h2>
+    </div>
+  </div>
+
+  <!-- Vehicle Info Section -->
+  <section class="rent-details">
+      <img id="vehicleImage" src="" alt="Vehicle" />
+      <div class="vehicle-info">
+        <h2 id="vehicleName">Vehicle Name</h2>
+        <p><strong>Price:</strong> <span id="vehiclePrice"></span></p>
+        <p><strong>Type:</strong> <span id="vehicleType"></span></p>
+        <p><strong>Store Location:</strong> <span id="vehicleLocation"></span></p>
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <h3>Upload ID Proofs</h3>
+      <label>Aadhaar Card:</label>
+      <input type="file" id="aadhaarUpload" accept="image/*,.pdf" /><br /><br />
+      <label>Driving License:</label>
+      <input type="file" id="licenseUpload" accept="image/*,.pdf" /><br /><br />
+      <button id="confirmBookingBtn">Confirm Booking</button>
+    </div>
+  </section>
+
+  <!-- Auth Panel -->
+  <div id="authPanel" class="auth-panel">
+    <div class="auth-content" id="loginPanel">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <span id="switchToSignup">Sign up</span></p>
+    </div>
+
+    <div class="auth-content" id="signupPanel" style="display: none;">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <input type="text" id="signupName" placeholder="Full Name" required />
+        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <span id="switchToLogin">Login</span></p>
+    </div>
+    <button id="closeAuthPanel">X</button>
+  </div>
+  <script>
+    const vehicle = JSON.parse(localStorage.getItem('selectedVehicle'));
+  
+    if (!vehicle) {
+      document.querySelector('.vehicle-info').innerHTML = '<p>No vehicle selected.</p>';
+    } else {
+      document.getElementById('vehicleImage').src = vehicle.image;
+      document.getElementById('vehicleName').textContent = vehicle.name;
+      document.getElementById('vehiclePrice').textContent = vehicle.price;
+      document.getElementById('vehicleLocation').textContent = vehicle.location || 'Not specified';
+    }
+  </script>
+  
+
+  <script type="module" src="scripts/auth.js"></script>
+  <script type="module" src="scripts/rent.js"></script>
+  <script type="module" src="scripts/listings.js"></script>
+</body>
+</html>

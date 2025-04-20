@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner With Us - Freedo Rentals</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
+  <link rel="stylesheet" href="/styles/index.css" />
+  <link rel="stylesheet" href="styles/partner.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-center">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="partner.html" class="active">Partner With Us</a>
+    </div>
+    <div class="nav-right">
+      <button id="openLogin">Sign In</button>
+    </div>
+  </header>
+
+  <!-- Partner Section -->
+  <section class="partner-section">
+    <div class="partner-container">
+      <!-- Left: Form -->
+      <div class="partner-form">
+        <h2>Partner With Us</h2>
+        <form id="partnerForm">
+          <input type="text" placeholder="Enter your name" required />
+          <input type="tel" placeholder="+91 Enter your phone number" required />
+          <input type="email" placeholder="Enter your email" required />
+          <select required>
+            <option value="" disabled selected>Select your city</option>
+            <option value="Nainital">Nainital</option>
+            <option value="Haldwani">Haldwani</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Ramnagar">Ramnagar</option>
+          </select>
+          <label class="terms">
+            <input type="checkbox" id="agreeTerms" />
+            I agree to the terms & conditions.
+          </label>
+          <button type="submit" disabled id="submitBtn">Submit</button>
+        </form>
+      </div>
+
+      <!-- Right: Image + Features -->
+      <div class="partner-info">
+        <img src="/source/f04fb597df89fe3adf9257d4efe3aafd.jpg" alt="Partnering" />
+        <div class="partner-features">
+          <div class="feature-card">
+            <img src="https://img.icons8.com/ios-filled/50/megaphone.png" />
+            <h4>Grow with Confidence</h4>
+            <p>Partner with a brand that puts your success first—boosting rentals and visibility every day</p>
+          </div>
+          <div class="feature-card">
+            <img src="https://img.icons8.com/ios-filled/50/laptop.png" />
+            <h4>Smart Tech, Seamless Ops</h4>
+            <p>Digitize your rental business with real-time booking, payments, and inventory control.</p>
+          </div>
+          <div class="feature-card">
+            <img src="https://img.icons8.com/ios-filled/50/thumb-up.png" />
+            <h4>Trusted by Riders</h4>
+            <p>>1 k customers with 4.5+ star ratings proves our customer centricity</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Script to enable submit button -->
+  <script>
+   
+    closeAuthBtn.addEventListener("click", () => {
+      authPanel.classList.remove("open");
+    });
+  </script>
+  
+  <script type="module" src="scripts/load-auth.js"></script>
+
+  
+</body>
+</html>

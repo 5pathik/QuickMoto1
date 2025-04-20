@@ -1,0 +1,149 @@
+/* Common Section Style */
+.about-section,
+.about-mission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 4rem 2rem;
+  gap: 2rem;
+}
+
+/* Section with Image on Left */
+.about-section {
+  flex-direction: row;
+  background-color: #f9f9f9;
+}
+
+/* Section with Image on Right */
+.about-mission {
+  flex-direction: row-reverse;
+  background-color: #ffffff;
+}
+
+.about-image,
+.mission-image {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.about-image img,
+.mission-image img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.about-content,
+.about-text {
+  flex: 1 1 50%;
+  padding: 0 1rem;
+}
+
+.about-content h1,
+.about-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1e1e1e;
+}
+
+.about-content p,
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+/* Reviews Section */
+.reviews-section {
+  padding: 4rem 2rem;
+  background-color: #e6f0ff;
+  text-align: center;
+}
+
+.reviews-section h2 {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.reviews-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  font-style: italic;
+  text-align: left;
+}
+
+/* Review Submission */
+.submit-review {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+.submit-review h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.submit-review p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.submit-review button {
+  padding: 0.8rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-review button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .about-section,
+  .about-mission {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .about-image,
+  .mission-image,
+  .about-content,
+  .about-text {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .about-image img,
+  .mission-image img {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .reviews-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
