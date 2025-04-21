@@ -1,49 +1,64 @@
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 
-const loginWarning = document.getElementById('loginWarning');
-const mainContent = document.getElementById('mainContent');
-const vehicleInfo = document.getElementById('vehicleInfo');
+const vehicle = JSON.parse(localStorage.getItem('selectedVehicle'));
+const usernameDisplay = document.getElementById('usernameDisplay');
+const logoutBtn = document.getElementById('logoutBtn');
+const signInBtn = document.getElementById('signInBtn');
+const loginOverlay = document.getElementById('loginOverlay');
 const uploadForm = document.getElementById('uploadForm');
+
+const vehicleImage = document.getElementById('vehicleImage');
+const vehicleName = document.getElementById('vehicleName');
+const vehiclePrice = document.getElementById('vehiclePrice');
+const vehicleType = document.getElementById('vehicleType');
+const vehicleLocation = document.getElementById('vehicleLocation');
+
+// Optional: auth panel (for slide-in login)
+const authPanel = document.getElementById('authPanel');
+const triggerAuthPanel = document.getElementById('triggerAuthPanel');
 
 let currentUser = null;
 
 // Display vehicle details
-function showVehicleDetails() {
-  const selected = JSON.parse(localStorage.getItem('selectedVehicle'));
-  if (!selected) {
-    vehicleInfo.innerHTML = "<p>No vehicle selected.</p>";
-    return;
-  }
-
-  vehicleInfo.innerHTML = `
-    <img src="${selected.image}" alt="${selected.name}" style="width:100%; max-width:400px; border-radius:10px;"/>
-    <h3>${selected.name}</h3>
-    <p><strong>Price:</strong> ${selected.price}</p>
-    <p><strong>Location:</strong> ${selected.location || "Not available"}</p>
-  `;
+if (vehicle) {
+  vehicleImage.src = vehicle.image;
+  vehicleName.textContent = vehicle.name;
+  vehiclePrice.textContent = vehicle.price;
+  vehicleType.textContent = vehicle.type || 'Not specified';
+  vehicleLocation.textContent = vehicle.location || 'Unknown';
+} else {
+  vehicleName.textContent = "No vehicle selected.";
 }
 
-// Watch auth state
+// Check login state
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
-    loginWarning.style.display = "none";
-    mainContent.classList.remove("blur-overlay");
+    usernameDisplay.textContent = user.displayName || "User";
+    logoutBtn.style.display = "inline-block";
+    signInBtn.style.display = "none";
+    loginOverlay.classList.add("hidden");
   } else {
-    loginWarning.style.display = "flex";
-    mainContent.classList.add("blur-overlay");
+    currentUser = null;
+    usernameDisplay.textContent = "";
+    logoutBtn.style.display = "none";
+    signInBtn.style.display = "inline-block";
+    loginOverlay.classList.remove("hidden");
   }
-
-  showVehicleDetails();
 });
 
-// Handle ID uploads
+// Handle logout
+logoutBtn.addEventListener('click', () => {
+  auth.signOut();
+});
+
+// Upload form
 uploadForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   if (!currentUser) {
-    alert("Please log in before submitting your ID proofs.");
+    alert("Please log in to continue.");
     return;
   }
 
@@ -55,7 +70,30 @@ uploadForm.addEventListener('submit', (e) => {
     return;
   }
 
-  // For now we simulate the booking submission
+  // Simulated success
   alert("Booking submitted successfully!");
   uploadForm.reset();
 });
+
+// ➕ New: Open slide-in login panel when clicking "Sign In" inside loginOverlay
+if (triggerAuthPanel && authPanel) {
+  triggerAuthPanel.addEventListener('click', () => {
+    authPanel.classList.add('show');
+    loginOverlay.classList.add('hidden');
+  });
+}
+// ➕ Open slide-in login panel
+if (triggerAuthPanel && authPanel) {
+  triggerAuthPanel.addEventListener('click', () => {
+    authPanel.classList.add('show');
+    loginOverlay.classList.add('hidden');
+  });
+}
+
+// ❌ Close slide-in panel when clicking the "X" button
+const closeAuthPanel = document.getElementById('closeAuthPanel');
+if (closeAuthPanel && authPanel) {
+  closeAuthPanel.addEventListener('click', () => {
+    authPanel.classList.remove('show');
+  });
+}
