@@ -14,9 +14,9 @@ const vehiclePrice = document.getElementById('vehiclePrice');
 const vehicleType = document.getElementById('vehicleType');
 const vehicleLocation = document.getElementById('vehicleLocation');
 
-// Optional: auth panel (for slide-in login)
 const authPanel = document.getElementById('authPanel');
 const triggerAuthPanel = document.getElementById('triggerAuthPanel');
+const closeAuthPanel = document.getElementById('closeAuthPanel');
 
 let currentUser = null;
 
@@ -39,6 +39,7 @@ onAuthStateChanged(auth, (user) => {
     logoutBtn.style.display = "inline-block";
     signInBtn.style.display = "none";
     loginOverlay.classList.add("hidden");
+    authPanel.classList.remove("show");
   } else {
     currentUser = null;
     usernameDisplay.textContent = "";
@@ -75,25 +76,20 @@ uploadForm.addEventListener('submit', (e) => {
   uploadForm.reset();
 });
 
-// ➕ New: Open slide-in login panel when clicking "Sign In" inside loginOverlay
+// ➕ Open slide-in login panel when clicking "Sign In"
 if (triggerAuthPanel && authPanel) {
   triggerAuthPanel.addEventListener('click', () => {
     authPanel.classList.add('show');
-    loginOverlay.classList.add('hidden');
-  });
-}
-// ➕ Open slide-in login panel
-if (triggerAuthPanel && authPanel) {
-  triggerAuthPanel.addEventListener('click', () => {
-    authPanel.classList.add('show');
-    loginOverlay.classList.add('hidden');
+    // Do NOT hide the overlay here
   });
 }
 
-// ❌ Close slide-in panel when clicking the "X" button
-const closeAuthPanel = document.getElementById('closeAuthPanel');
+// ❌ Close slide-in panel, but keep overlay if not logged in
 if (closeAuthPanel && authPanel) {
   closeAuthPanel.addEventListener('click', () => {
     authPanel.classList.remove('show');
+    if (!currentUser) {
+      loginOverlay.classList.remove('hidden');
+    }
   });
 }

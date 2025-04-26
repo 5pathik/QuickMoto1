@@ -79,10 +79,18 @@
     closeAuthBtn.addEventListener("click", () => {
       authPanel.classList.remove("open");
     });
+
+    <div id="footer-container"></div>
+
   </script>
   
   <script type="module" src="scripts/load-auth.js"></script>
-
-  
+  <script>
+    fetch("footer.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
+  </script>
 </body>
 </html>

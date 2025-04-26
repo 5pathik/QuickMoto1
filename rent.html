@@ -9,6 +9,7 @@
 
 </head>
 <body>
+  <div class="page-wrapper">
   <!-- Navbar -->
   <header class="rent-nav">
     <a href="index.html" class="logo">QuickMoto</a>
@@ -20,7 +21,7 @@
     <div id="userActions">
       <span id="usernameDisplay"></span>
       <button id="logoutBtn" style="display: none;">Logout</button>
-      <button id="signInBtn">Sign In</button>
+      <button id="openLogin">Sign In</button>
     </div>
   </header>
 
@@ -86,11 +87,19 @@
   <button id="closeAuthPanel" style="position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; border-radius: 50%; border: none; font-size: 1rem; font-weight: bold; cursor: pointer;">X</button>
 
 </div>
-
-  
+<div id="footer-container"></div>
   <!-- Scripts -->
   <script type="module" src="scripts/rent.js"></script>
- 
-  
+  <script type="module" src="scripts/auth.js"></script>
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
+  </script>
+</div>
+</div>
+</body>77
 </body>
 </html>
