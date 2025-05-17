@@ -1,55 +1,56 @@
-// Show city modal on first load
 window.addEventListener("DOMContentLoaded", () => {
   const cityModal = document.getElementById("cityModal");
+  const dateModal = document.getElementById("dateModal");
   const selectedCityDisplay = document.getElementById("selectedCity");
-
   const selectedCity = localStorage.getItem("selectedCity");
-  if (cityModal && !selectedCity) {
+  const selectedDate = localStorage.getItem("selectedDate");
+
+  // Step 1: Show city modal only if no city is stored
+  if (!selectedCity) {
     cityModal.style.display = "flex";
-  } else if (selectedCityDisplay) {
+  } else if (!selectedDate) {
+    // Step 2: If city is stored but date is not, show date modal
     selectedCityDisplay.textContent = selectedCity;
+    dateModal.style.display = "flex";
+  } else {
+    // Both are selected
+    selectedCityDisplay.textContent = selectedCity;
+    document.getElementById("startDate").value = selectedDate;
+    document.getElementById("endDate").value = selectedDate;
   }
 });
 
-// Handle city selection
-const cityCards = document.querySelectorAll(".city-card");
-if (cityCards.length > 0) {
-  cityCards.forEach(card => {
-    card.addEventListener("click", () => {
-      const city = card.getAttribute("data-city");
-      localStorage.setItem("selectedCity", city);
-      const selectedCityDisplay = document.getElementById("selectedCity");
-      if (selectedCityDisplay) selectedCityDisplay.textContent = city;
-      const cityModal = document.getElementById("cityModal");
-      if (cityModal) cityModal.style.display = "none";
-    });
-  });
-}
+// Step 3: When a city is clicked
+document.querySelectorAll(".city-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const city = card.getAttribute("data-city");
+    localStorage.setItem("selectedCity", city);
+    document.getElementById("selectedCity").textContent = city;
 
-// Close city modal manually
-const closeCityModal = document.getElementById("closeCityModal");
-if (closeCityModal) {
-  closeCityModal.addEventListener("click", () => {
-    const cityModal = document.getElementById("cityModal");
-    if (cityModal) cityModal.style.display = "none";
+    document.getElementById("cityModal").style.display = "none";
+    document.getElementById("dateModal").style.display = "flex";
   });
-}
+});
 
-// Allow changing location later
-const changeLocationBtn = document.getElementById("changeLocationBtn");
-if (changeLocationBtn) {
-  changeLocationBtn.addEventListener("click", () => {
-    const cityModal = document.getElementById("cityModal");
-    if (cityModal) cityModal.style.display = "flex";
-  });
-}
+// Step 4: Confirm date
+document.getElementById("confirmDateBtn").addEventListener("click", () => {
+  const date = document.getElementById("datePicker").value;
+  if (!date) {
+    alert("Please select a date.");
+    return;
+  }
 
-// Open auth panel
-const openLogin = document.getElementById("openLogin");
-const authPanel = document.getElementById("authPanel");
+  localStorage.setItem("selectedDate", date);
+  document.getElementById("dateModal").style.display = "none";
 
-if (openLogin && authPanel) {
-  openLogin.addEventListener("click", () => {
-    authPanel.style.display = "flex";
-  });
-}
+  // Also update date inputs
+  document.getElementById("startDate").value = date;
+  document.getElementById("endDate").value = date;
+});
+
+// Optional: Change location/date
+document.getElementById("changeLocationBtn").addEventListener("click", () => {
+  localStorage.removeItem("selectedCity");
+  localStorage.removeItem("selectedDate");
+  location.reload(); // Will trigger city modal again
+});

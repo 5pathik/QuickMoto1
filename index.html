@@ -8,6 +8,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/index.css" />
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/index.css" />
 </head>
 <body>
 
@@ -38,6 +39,15 @@
       <button id="closeCityModal">X</button>
     </div>
   </div>
+  <!-- Date Selection Modal -->
+<div id="dateModal" class="modal">
+  <div class="modal-content">
+    <h2>Select Your Date</h2>
+    <input type="date" id="datePicker" />
+    <button id="confirmDateBtn">Confirm</button>
+  </div>
+</div>
+
 
   <!-- Search Section -->
   <section class="search-section">
@@ -67,16 +77,13 @@
   <!-- Scripts -->
 
   <!-- Footer Loader -->
+
   <script>
-    fetch("footer.html")
-      .then(response => {
-        if (!response.ok) throw new Error("Failed to load footer");
-        return response.text();
-      })
-      .then(html => {
-        document.getElementById("footer-container").innerHTML = html;
-      })
-      .catch(console.error);
+    fetch("components/footer.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
   </script>
 
   <!-- Navbar Loader (loads navbar.html into #navbar-container, then calls initAuth) -->

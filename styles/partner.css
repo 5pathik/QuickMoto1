@@ -90,7 +90,7 @@
 
 .feature-card {
   flex: 1 1 30%;
-  background-color: #00a8cc; /* matching blue */
+  background-color:rgb(75, 165, 200); 
   padding: 1rem;
   border-radius: 10px;
   text-align: center;
