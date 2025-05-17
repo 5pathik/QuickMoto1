@@ -3,27 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Partner With Us - Freedo Rentals</title>
-  <link rel="stylesheet" href="/styles/style.css" />
+  <title>Partner With Us - QuickMoto</title>
+  
   <link rel="stylesheet" href="styles/auth.css" />
   
   <link rel="stylesheet" href="styles/partner.css" />
+  <link rel="stylesheet" href="styles/style.css"/>
   <link rel="stylesheet" href="/styles/index.css" />
+  
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="navbar">
-    <div class="nav-center">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="partner.html" class="active">Partner With Us</a>
-    </div>
-    <div class="nav-right">
-      <button id="openLogin">Sign In</button>
-    </div>
-  </header>
-
+  <div id="navbar-container"></div>
   <!-- Partner Section -->
   <section class="partner-section">
     <div class="partner-container">
@@ -51,7 +41,7 @@
 
       <!-- Right: Image + Features -->
       <div class="partner-info">
-        <img src="/source/f04fb597df89fe3adf9257d4efe3aafd.jpg" alt="Partnering" />
+        <img src="source/f04fb597df89fe3adf9257d4efe3aafd.jpg" alt="Partnering" />
         <div class="partner-features">
           <div class="feature-card">
             <img src="https://img.icons8.com/ios-filled/50/megaphone.png" />
@@ -84,7 +74,7 @@
 
   </script>
   
-  <script type="module" src="scripts/load-auth.js"></script>
+
   <script>
     fetch("footer.html")
       .then(response => response.text())
@@ -92,5 +82,7 @@
         document.getElementById("footer-container").innerHTML = data;
       });
   </script>
+  <script src="scripts/navbar-loader.js"></script>
+  <script src="scripts/navbar-loader.js"></script>
 </body>
 </html>

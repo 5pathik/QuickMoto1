@@ -1,111 +1,119 @@
 /* partner.css */
 .partner-section {
-    padding: 3rem 2rem;
-    background-color: #fff;
-  }
-  
-  .partner-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  .partner-form {
-    flex: 1 1 400px;
-    max-width: 500px;
-  }
-  
-  .partner-form h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .partner-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .partner-form input,
-  .partner-form select {
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    font-size: 1rem;
-  }
-  
-  .partner-form select {
-    appearance: none;
-  }
-  
-  .partner-form .terms {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-  }
-  
-  .partner-form button {
-    padding: 0.75rem;
-    border: none;
-    border-radius: 30px;
-    background-color: #eee;
-    color: #888;
-    cursor: not-allowed;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .partner-form button.enabled {
-    background-color: #00d1ff;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .partner-info {
-    flex: 1 1 400px;
-    max-width: 600px;
-    text-align: center;
-  }
-  
-  .partner-info img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .partner-features {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-  
-  .feature-card {
-    flex: 1 1 30%;
-    background-color: #f8f8f8;
-    padding: 1rem;
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  .feature-card img {
-    width: 30px;
-    margin-bottom: 0.5rem;
-  }
-  /* footer */
+  padding: 3rem 2rem;
+  background-color: #f9fdfd; /* light teal background */
+}
+
+.partner-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.partner-form {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+.partner-form h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #007f91; /* teal heading */
+}
+
+.partner-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.partner-form input,
+.partner-form select {
+  padding: 0.75rem;
+  border: 1px solid #aad4d8;
+  border-radius: 30px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.partner-form select {
+  appearance: none;
+}
+
+.partner-form .terms {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.partner-form button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 30px;
+  background-color: #d1ecf2;
+  color: #7aa6b1;
+  cursor: not-allowed;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.partner-form button.enabled {
+  background-color: #00a8cc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.partner-info {
+  flex: 1 1 400px;
+  max-width: 600px;
+  text-align: center;
+  color: #444;
+}
+
+.partner-info img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.partner-features {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  flex: 1 1 30%;
+  background-color: #00a8cc; /* matching blue */
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.feature-card img {
+  width: 30px;
+  margin-bottom: 0.5rem;
+}
+
+/* footer */
 .footer {
   padding: 1.5rem 2rem;
   text-align: center;
-  background-color: #f2f2f2;
-  color: #555;
+  background-color: #eaf7fa;
+  color: #444;
   font-size: 0.95rem;
   margin-top: 2rem;
 }
+
 .footer-links a {
-  color: #66b2ff;
+  color: #00a8cc;
   margin: 0 0.5rem;
   text-decoration: none;
 }
@@ -113,5 +121,3 @@
 .footer-links a:hover {
   text-decoration: underline;
 }
-
-  

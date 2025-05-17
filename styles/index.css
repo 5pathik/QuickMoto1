@@ -21,42 +21,7 @@
     line-height: 1.6;
   }
   
-  /* Navbar */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .nav-center {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-  }
-  .nav-center a {
-    margin: 0 1rem;
-    text-decoration: none;
-    color: #444;
-    font-weight: 500;
-  }
-  
-  .nav-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-right button,
-  .dropbtn {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-  }
+
   
   /* Dropdown */
   .dropdown {

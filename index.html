@@ -2,52 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QuickMoto Rentals</title>
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles/index.css" />
-  <link real="stylesheet" href="styles/style.css"/>
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-center">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="partner.html">Partner With Us</a>
-    </div>
-    <div class="nav-right">
-      <div id="userMenu" style="display: none;">
-        <span id="usernameDisplay"></span>
-        <div class="dropdown">
-          <button class="dropbtn">User ▾</button>
-          <div class="dropdown-content">
-            <a href="#">About User</a>
-            <a href="history.html">History</a>
-            <a href="#" id="logoutBtn">Logout</a>
-          </div>
-        </div>
-      </div>
-      <button id="openLogin">Sign In</button>
-    </div>
-  </header>
+
+  <!-- Navbar Placeholder (Loaded dynamically) -->
+  <div id="navbar-container"></div>
+
+  <!-- Auth Panel (Loaded dynamically by auth.js) -->
+  <div id="authPanel" class="auth-panel" style="display: none;"></div>
 
   <!-- City Modal -->
-  <div id="cityModal" class="modal">
+  <div id="cityModal" class="modal" style="display: none;">
     <div class="modal-content">
       <h3>Select Your City</h3>
       <div class="city-options">
         <div class="city-card" data-city="Nainital">
-          <img class="city-img" src="/source/9cab38dc9bc5ad28268205a8de2e2f1c.jpg" alt="Nainital" />
+          <img class="city-img" src="source/9cab38dc9bc5ad28268205a8de2e2f1c.jpg" alt="City view of Nainital" />
           <p>Nainital</p>
         </div>
         <div class="city-card" data-city="Haldwani">
-          <img class="city-img" src="/source/d1abbf6aec7ef58e37aac9d9a329cace.jpg" alt="Haldwani" />
+          <img class="city-img" src="source/d1abbf6aec7ef58e37aac9d9a329cace.jpg" alt="Haldwani" />
           <p>Haldwani</p>
         </div>
         <div class="city-card" data-city="Ramnagar">
-          <img class="city-img" src="/source/5c9b5d20eecab07ffa5be8ca9afcab49.jpg" alt="Ramnagar" />
+          <img class="city-img" src="source/5c9b5d20eecab07ffa5be8ca9afcab49.jpg" alt="Ramnagar" />
           <p>Ramnagar</p>
         </div>
       </div>
@@ -55,38 +39,13 @@
     </div>
   </div>
 
-  <!-- Auth Panel (Login + Signup) -->
-  <div id="authPanel" class="auth-panel" style="display: none;">
-    <div class="auth-content" id="loginPanel">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <span id="switchToSignup">Sign up</span></p>
-    </div>
-
-    <div class="auth-content" id="signupPanel" style="display: none;">
-      <h2>Sign Up</h2>
-      <form id="signupForm">
-        <input type="text" id="signupName" placeholder="Full Name" required />
-        <input type="email" id="signupEmail" placeholder="Email" required />
-        <input type="password" id="signupPassword" placeholder="Password" required />
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>Already have an account? <span id="switchToLogin">Login</span></p>
-    </div>
-    <button id="closeAuthPanel">X</button>
-  </div>
-
   <!-- Search Section -->
   <section class="search-section">
     <h1>Search your next ride</h1>
     <div class="search-inputs">
       <span id="selectedCity">Choose City</span>
-      <input type="date" id="startDate">
-      <input type="date" id="endDate">
+      <input type="date" id="startDate" />
+      <input type="date" id="endDate" />
       <button id="changeLocationBtn">Change City</button>
     </div>
   </section>
@@ -101,20 +60,34 @@
     </div>
     <div id="fleet-items" class="fleet-items"></div>
   </section>
+
+  <!-- Footer Placeholder -->
   <div id="footer-container"></div>
 
-
   <!-- Scripts -->
+
+  <!-- Footer Loader -->
   <script>
     fetch("footer.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("footer-container").innerHTML = data;
-      });
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to load footer");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById("footer-container").innerHTML = html;
+      })
+      .catch(console.error);
   </script>
-  
-  <script type="module" src="scripts/listings.js"></script>
-  <script src="scripts/main.js"></script>
-  <script type="module" src="scripts/auth.js"></script>
+
+  <!-- Navbar Loader (loads navbar.html into #navbar-container, then calls initAuth) -->
+  <script type="module" src="scripts/navbar-loader.js" defer></script>
+
+  <!-- Your page scripts -->
+  <script type="module" src="scripts/listings.js" defer></script>
+  <script type="module" src="scripts/auth.js" defer></script>
+  <script src="scripts/navbar-loader.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+
+
 </body>
 </html>

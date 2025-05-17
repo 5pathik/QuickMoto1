@@ -4,27 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About Us - QuickMoto Rentals</title>
-  <link rel="stylesheet" href="/styles/style.css" />
+
   <link rel="stylesheet" href="styles/auth.css" />
   <link rel="stylesheet" href="styles/index.css" />
   <link rel="stylesheet" href="styles/about.css" />
+  <link rel="stylesheet" href="styles/style.css"/>
 
   <script src="scripts/load-auth.js"></script>
 </head>
 <body>
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-center">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About Us</a>
-      <a href="partner.html">Partner With Us</a>
-    </div>
-    <div class="nav-right">
-      <button id="openLogin">Sign In</button>
-    </div>
-  </header>
+  <div id="navbar-container"></div>
   
-
   <!-- About Section -->
   <section class="about-section">
     <div class="about-image">
@@ -93,6 +84,8 @@
     <p>&copy; 2025 QuickMoto Rentals. All rights reserved.</p>
   </footer>
   <script type="module" src="scripts/load-auth.js"></script>
+  <script src="scripts/navbar-loader.js"></script>
+
 
 </body>
 </html>

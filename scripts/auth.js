@@ -12,8 +12,8 @@ import {
   getDoc
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("Auth.js loaded");
+export function initAuth() {
+  console.log("Auth.js initialized");
 
   const openLoginBtn = document.getElementById('openLogin');
   const authPanel = document.getElementById('authPanel');
@@ -28,16 +28,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const userMenu = document.getElementById('userMenu');
   const logoutBtn = document.getElementById('logoutBtn');
 
+  // Defensive check: some elements may be missing if not on certain pages
+  if (!openLoginBtn || !authPanel || !loginPanel || !signupPanel || !closeAuthPanelBtn) {
+    console.warn("Auth elements missing, skipping auth init");
+    return;
+  }
+
   // Open login panel
-  openLoginBtn?.addEventListener('click', () => {
-    authPanel?.classList.add('show');
+  openLoginBtn.addEventListener('click', () => {
+    authPanel.classList.add('show');
     loginPanel.style.display = 'block';
     signupPanel.style.display = 'none';
   });
 
   // Close auth panel
-  closeAuthPanelBtn?.addEventListener('click', () => {
-    authPanel?.classList.remove('show');
+  closeAuthPanelBtn.addEventListener('click', () => {
+    authPanel.classList.remove('show');
   });
 
   // Switch between login/signup
@@ -110,4 +116,4 @@ document.addEventListener('DOMContentLoaded', () => {
       openLoginBtn.style.display = 'inline-block';
     }
   });
-});
+}

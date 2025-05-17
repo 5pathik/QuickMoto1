@@ -1,27 +1,102 @@
 /* style.css */
-.auth-panel {
-    position: fixed;
-    top: 0;
-    right: -400px;
-    width: 300px;
-    height: 100%;
+
+
+  .rent-nav {
     background: #fff;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease;
-    z-index: 1000;
-    padding: 20px;
-  }
-  
-  .auth-panel .auth-content {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
   
-  #closeAuthPanel {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  .rent-nav .logo {
+    font-size: 1.6rem;
+    color: #00b8a9;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .rent-nav nav {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .rent-nav nav a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .rent-nav nav a:hover {
+    color: #00b8a9;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  #userMenu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .dropbtn {
+    background: #00b8a9;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    right: 0;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content a {
+    padding: 0.6rem 1rem;
+    display: block;
+    color: #444;
+    text-decoration: none;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  #openLogin,
+  #openSignup {
+    padding: 0.5rem 1rem;
+    background: #00b8a9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+  }
+  
+  #openLogin:hover,
+  #openSignup:hover {
+    background: #007f72;
   }
   

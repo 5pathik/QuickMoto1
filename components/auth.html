@@ -1,26 +1,27 @@
 <!-- components/auth.html -->
-<div id="authPanel" class="auth-panel">
-    <div class="auth-content" id="loginPanel">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <span id="switchToSignup">Sign Up</span></p>
-    </div>
-  
-    <div class="auth-content" id="signupPanel" style="display: none;">
-      <h2>Sign Up</h2>
-      <form id="signupForm">
-        <input type="text" id="signupName" placeholder="Full Name" required />
-        <input type="email" id="signupEmail" placeholder="Email" required />
-        <input type="password" id="signupPassword" placeholder="Password" required />
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>Already have an account? <span id="switchToLogin">Login</span></p>
-    </div>
-  
-    <button id="closeAuthPanel">X</button>
+<div id="authPanel" class="auth-panel" style="display: none;">
+  <button id="closeAuthPanel" class="close-btn">×</button>
+
+  <!-- Login Panel -->
+  <div class="auth-content" id="loginPanel">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <span id="switchToSignup" class="auth-switch">Sign Up</span></p>
   </div>
-  
+
+  <!-- Sign Up Panel -->
+  <div class="auth-content" id="signupPanel" style="display: none;">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <input type="text" id="signupName" placeholder="Full Name" required />
+      <input type="email" id="signupEmail" placeholder="Email" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <span id="switchToLogin" class="auth-switch">Login</span></p>
+  </div>
+</div>
