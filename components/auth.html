@@ -5,10 +5,12 @@
       <input type="email" id="loginEmail" placeholder="Email" required />
       <input type="password" id="loginPassword" placeholder="Password" required />
       <button type="submit">Login</button>
+      <p>
+        <a id="forgotPasswordLink" href="#">Forgot password?</a>
+      </p>
       <p>Don't have an account? <a id="switchToSignup" href="#">Sign up</a></p>
     </form>
   </div>
-
   <div id="signupPanel" style="display: none;">
     <form id="signupForm">
       <input type="text" id="signupName" placeholder="Name" required />
@@ -18,6 +20,14 @@
       <p>Already have an account? <a id="switchToLogin" href="#">Log in</a></p>
     </form>
   </div>
-
   <button id="closeAuthPanel">×</button>
 </div>
+
+<script>
+const openLoginBtn = document.getElementById("openLogin");
+const authPanel = document.getElementById("authPanel");
+
+openLoginBtn.addEventListener("click", () => {
+  authPanel.classList.add("show");
+});
+</script>

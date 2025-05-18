@@ -37,9 +37,18 @@ body {
     font-size: 1.8rem;
   }
   
+  #history-list {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
   .history-item {
-    border-bottom: 1px solid #ccc;
-    padding: 1rem 0;
+    background: #f7f8fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.2rem 1rem;
+    margin-bottom: 1.5rem;
   }
   
   .history-item:last-child {
@@ -47,9 +56,9 @@ body {
   }
   
   .history-item h3 {
-    margin: 0;
+    margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
-    color: #2c3e50;
+    color: #00b8a9;
   }
   
   .history-item p {
@@ -57,4 +66,3 @@ body {
     font-size: 0.95rem;
     color: #555;
   }
-  

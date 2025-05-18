@@ -4,6 +4,7 @@ import { auth, db } from './firebase.js';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
   signOut,
   onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
@@ -14,49 +15,67 @@ import {
   getDoc
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const openLoginBtn = document.getElementById('openLogin');
-  const authPanel = document.getElementById('authPanel');
-  const loginPanel = document.getElementById('loginPanel');
-  const signupPanel = document.getElementById('signupPanel');
-  const closeAuthPanelBtn = document.getElementById('closeAuthPanel');
-  const switchToSignup = document.getElementById('switchToSignup');
-  const switchToLogin = document.getElementById('switchToLogin');
-  const loginForm = document.getElementById('loginForm');
+export function initAuth() {
+  const openLoginBtn = document.getElementById("openLogin");
+  const authPanel = document.getElementById("authPanel");
+  const loginPanel = document.getElementById("loginPanel");
+  const signupPanel = document.getElementById("signupPanel");
+  const closeAuthPanelBtn = document.getElementById("closeAuthPanel");
+  const switchToSignup = document.getElementById("switchToSignup");
+  const switchToLogin = document.getElementById("switchToLogin");
+  const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+
+  if (!openLoginBtn || !authPanel) return;
+
+  openLoginBtn.addEventListener("click", () => {
+    authPanel.classList.add("show");
+    loginPanel.style.display = "block";
+    signupPanel.style.display = "none";
+  });
+
+  closeAuthPanelBtn?.addEventListener("click", () => {
+    authPanel.classList.remove("show");
+  });
+
+  switchToSignup?.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginPanel.style.display = "none";
+    signupPanel.style.display = "block";
+  });
+
+  switchToLogin?.addEventListener("click", (e) => {
+    e.preventDefault();
+    signupPanel.style.display = "none";
+    loginPanel.style.display = "block";
+  });
+
+  forgotPasswordLink?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+      alert("Please enter your email in the email field above first.");
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Password reset email sent! Check your inbox.");
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  // --- SIGNUP LOGIC ---
   const signupForm = document.getElementById('signupForm');
-  const usernameDisplay = document.getElementById('usernameDisplay');
-  const userMenu = document.getElementById('userMenu');
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  // Show auth panel
-  openLoginBtn?.addEventListener('click', () => {
-    authPanel.classList.add('show');
-    loginPanel.style.display = 'block';
-    signupPanel.style.display = 'none';
-  });
-
-  // Hide auth panel
-  closeAuthPanelBtn?.addEventListener('click', () => {
-    authPanel.classList.remove('show');
-  });
-
-  // Switch panels
-  switchToSignup?.addEventListener('click', () => {
-    loginPanel.style.display = 'none';
-    signupPanel.style.display = 'block';
-  });
-
-  switchToLogin?.addEventListener('click', () => {
-    signupPanel.style.display = 'none';
-    loginPanel.style.display = 'block';
-  });
-
-  // Signup
   signupForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value;
+
+    if (!name || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -66,48 +85,66 @@ document.addEventListener('DOMContentLoaded', () => {
         email,
         createdAt: new Date().toISOString()
       });
-      authPanel.classList.remove('show');
+      alert("Signup successful! You can now log in.");
+      signupForm.reset();
+      signupPanel.style.display = "none";
+      loginPanel.style.display = "block";
     } catch (error) {
       alert("Signup failed: " + error.message);
     }
   });
 
-  // Login
+  // --- LOGIN LOGIC ---
+  const loginForm = document.getElementById('loginForm');
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
 
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
       if (userDoc.exists()) {
-        usernameDisplay.textContent = userDoc.data().name;
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        if (usernameDisplay) usernameDisplay.textContent = userDoc.data().name;
       }
       authPanel.classList.remove('show');
+      loginForm.reset();
     } catch (error) {
       alert("Login failed: " + error.message);
     }
   });
 
-  // Logout
+  // --- LOGOUT LOGIC ---
+  const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn?.addEventListener('click', async () => {
     await signOut(auth);
     location.reload();
   });
 
-  // Auth state listener
+  // --- AUTH STATE LISTENER ---
   onAuthStateChanged(auth, async (user) => {
+    const userMenu = document.getElementById('userMenu');
     if (user) {
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (userDoc.exists()) {
-        usernameDisplay.textContent = userDoc.data().name;
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        if (usernameDisplay) usernameDisplay.textContent = userDoc.data().name;
       }
-      userMenu.style.display = 'flex';
-      openLoginBtn.style.display = 'none';
+      if (userMenu) userMenu.style.display = 'flex';
+      if (openLoginBtn) openLoginBtn.style.display = 'none';
     } else {
-      userMenu.style.display = 'none';
-      openLoginBtn.style.display = 'inline-block';
+      if (userMenu) userMenu.style.display = 'none';
+      if (openLoginBtn) openLoginBtn.style.display = 'inline-block';
     }
   });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initAuth();
 });

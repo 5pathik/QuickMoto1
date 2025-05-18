@@ -8,15 +8,12 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/index.css" />
   <link rel="stylesheet" href="styles/style.css" />
-  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
 </head>
 <body>
 
   <!-- Navbar Placeholder (Loaded dynamically) -->
   <div id="navbar-container"></div>
-
-  <!-- Auth Panel (Loaded dynamically by auth.js) -->
-  <div id="authPanel" class="auth-panel" style="display: none;"></div>
 
   <!-- City Modal -->
   <div id="cityModal" class="modal" style="display: none;">
@@ -76,8 +73,9 @@
 
   <!-- Scripts -->
 
-  <!-- Footer Loader -->
-
+  <script type="module" src="scripts/navbar-loader.js"></script>
+  <script type="module" src="scripts/listings.js"></script>
+  <script src="scripts/main.js"></script>
   <script>
     fetch("components/footer.html")
       .then(response => response.text())
@@ -85,16 +83,6 @@
         document.getElementById("footer-container").innerHTML = data;
       });
   </script>
-
-  <!-- Navbar Loader (loads navbar.html into #navbar-container, then calls initAuth) -->
-  <script type="module" src="scripts/navbar-loader.js" defer></script>
-
-  <!-- Your page scripts -->
-  <script type="module" src="scripts/listings.js" defer></script>
-  <script type="module" src="scripts/auth.js" defer></script>
-  <script src="scripts/navbar-loader.js" defer></script>
-  <script src="scripts/main.js" defer></script>
-
 
 </body>
 </html>

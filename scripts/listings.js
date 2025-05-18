@@ -1,59 +1,45 @@
 import { db } from './firebase.js';
 import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-const fleetItemsContainer = document.querySelector('.fleet-items');
-const filterButtons = document.querySelectorAll('.filter-tabs button');
-let allListings = [];
+const fleetItemsContainer = document.getElementById('fleet-items');
 
-async function fetchAndDisplayListings() {
-  const querySnapshot = await getDocs(collection(db, 'listings'));
-  allListings = [];
-  querySnapshot.forEach((doc) => {
-    allListings.push({ id: doc.id, ...doc.data() });
-  });
-  renderListings('all');
-}
-
-function renderListings(filter) {
-  fleetItemsContainer.innerHTML = '';
-
-  const filtered = filter === 'all'
-    ? allListings
-    : allListings.filter(item => item.type === filter); // item.type should be 'bike' or 'scooter'
-
-  if (filtered.length === 0) {
-    fleetItemsContainer.innerHTML = '<p>No listings found.</p>';
-    return;
-  }
-
-  filtered.forEach(listing => {
-    const card = document.createElement('div');
-    card.className = 'fleet-card';
-    card.innerHTML = `
-      <img src="${listing.image}" alt="${listing.name}" />
-      <h3>${listing.name}</h3>
-      <p>${listing.price}</p>
-      <button class="rent-now-btn">Rent Now</button>
-    `;
-
-    const button = card.querySelector('.rent-now-btn');
-    button.addEventListener('click', () => {
-      localStorage.setItem('selectedVehicle', JSON.stringify(listing));
-      window.location.href = 'rent.html';
+async function loadFleet() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "listings"));
+    let html = '';
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      html += `
+        <div class="fleet-card">
+          <img src="${data.image}" alt="${data.name}" class="fleet-img" />
+          <h3>${data.name}</h3>
+          <p>Type: ${data.type}</p>
+          <p>Location: ${data.location}</p>
+          <p>Price: ₹${data.price}</p>
+          <button class="rent-btn" data-id="${doc.id}">Rent Now</button>
+        </div>
+      `;
     });
+    fleetItemsContainer.innerHTML = html || "<p>No vehicles found.</p>";
 
-    fleetItemsContainer.appendChild(card);
-  });
+    // Add event listeners to "Rent Now" buttons
+    document.querySelectorAll('.rent-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const docId = btn.getAttribute('data-id');
+        // Find the vehicle data from the querySnapshot
+        const docData = Array.from(querySnapshot.docs).find(d => d.id === docId)?.data();
+        if (docData) {
+          // Save to localStorage
+          localStorage.setItem('selectedVehicle', JSON.stringify(docData));
+          // Redirect to rent.html
+          window.location.href = 'rent.html';
+        }
+      });
+    });
+  } catch (err) {
+    fleetItemsContainer.innerHTML = "<p>Error loading fleet.</p>";
+    console.error(err);
+  }
 }
 
-// Add event listeners to filter buttons
-filterButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelector('.filter-tabs .active')?.classList.remove('active');
-    btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    renderListings(filter);
-  });
-});
-
-fetchAndDisplayListings();
+document.addEventListener('DOMContentLoaded', loadFleet);

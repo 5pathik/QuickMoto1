@@ -4,103 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QuickMoto | Rent Now</title>
-  <link rel="stylesheet" href="styles/rent.css" />
   <link rel="stylesheet" href="styles/index.css" />
-  
-
+  <link rel="stylesheet" href="styles/rent.css" />
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
   <div class="page-wrapper">
-  <!-- Navbar -->
-  <header class="rent-nav">
-    <a href="index.html" class="logo">QuickMoto</a>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="partner.html">Partner</a>
-    </nav>
-    <div id="userActions">
-      <span id="usernameDisplay"></span>
-      <button id="logoutBtn" style="display: none;">Logout</button>
-      <button id="openLogin">Sign In</button>
-    </div>
-  </header>
-
-  <!-- Vehicle Details Section -->
-  <main class="rent-container">
-    <section class="vehicle-preview">
-      <img id="vehicleImage" src="" alt="Vehicle" />
-      <div class="details">
-        <h2 id="vehicleName">Loading...</h2>
-        <p><strong>Price:</strong> <span id="vehiclePrice"></span></p>
-        <p><strong>Category:</strong> <span id="vehicleType"></span></p>
-        <p><strong>Pickup Location:</strong> <span id="vehicleLocation"></span></p>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+    <!-- Vehicle Details & Booking Form -->
+    <main class="rent-main">
+      <div class="rent-flex">
+        <section class="vehicle-card card">
+          <img id="vehicleImage" src="" alt="Vehicle" />
+          <div class="details">
+            <h2 id="vehicleName">Loading...</h2>
+            <p><strong>Price:</strong> <span id="vehiclePrice"></span></p>
+            <p><strong>Category:</strong> <span id="vehicleType"></span></p>
+            <p><strong>Pickup Location:</strong> <span id="vehicleLocation"></span></p>
+          </div>
+        </section>
+        <section class="booking-card card">
+          <form id="rentForm" class="booking-form">
+            <!-- Example fields -->
+            <label>
+              Start Date:
+              <input id="startDateInput" type="date" required />
+            </label>
+            <label>
+              End Date:
+              <input id="endDateInput" type="date" required />
+            </label>
+            <button type="submit">Book Now</button>
+          </form>
+        </section>
       </div>
-    </section>
-
-    <!-- Upload Section -->
-    <section class="upload-box">
-      <h3>Upload Your Documents</h3>
-      <form id="uploadForm">
-        <label for="aadhaar">Aadhaar Card:</label>
-        <input type="file" id="aadhaarFile" accept="image/*,.pdf" required />
-
-        <label for="license">Driving License:</label>
-        <input type="file" id="licenseFile" accept="image/*,.pdf" required />
-
-        <button type="submit">Confirm Booking</button>
-      </form>
-    </section>
-  </main>
-
-
-<!-- Login Overlay (Centered Prompt) -->
-<div id="loginOverlay" class="login-overlay">
-  <div class="login-box">
-    <h2>Please Sign In</h2>
-    <p>You need to be signed in to proceed with booking.</p>
-    <button id="triggerAuthPanel">Sign In</button>
+    </main>
+    <div id="footer-container"></div>
   </div>
-</div>
-<!-- Slide-in Auth Panel -->
-<div id="authPanel" class="auth-panel hidden">
-  <div class="auth-content" id="loginPanel">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email" required />
-      <input type="password" id="loginPassword" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <span id="switchToSignup">Sign up</span></p>
-  </div>
-
-  <div class="auth-content" id="signupPanel" style="display: none;">
-    <h2>Sign Up</h2>
-    <form id="signupForm">
-      <input type="text" id="signupName" placeholder="Full Name" required />
-      <input type="email" id="signupEmail" placeholder="Email" required />
-      <input type="password" id="signupPassword" placeholder="Password" required />
-      <button type="submit">Sign Up</button>
-    </form>
-    <p>Already have an account? <span id="switchToLogin">Login</span></p>
-  </div>
-
-  <button id="closeAuthPanel" style="position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; border-radius: 50%; border: none; font-size: 1rem; font-weight: bold; cursor: pointer;">X</button>
-
-</div>
-<div id="footer-container"></div>
   <!-- Scripts -->
+   <script type="module" src="scripts/navbar-loader.js"></script>
   <script type="module" src="scripts/rent.js"></script>
   <script type="module" src="scripts/auth.js"></script>
   <script>
-    fetch("footer.html")
+    fetch("components/footer.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer-container").innerHTML = data;
       });
   </script>
-</div>
-</div>
-</body>77
 </body>
 </html>

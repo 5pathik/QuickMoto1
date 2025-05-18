@@ -3,39 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User History</title>
-  <link rel="stylesheet" href="styles/index.css">
+  <title>Rental History</title>
   <link rel="stylesheet" href="styles/history.css">
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="nav-center">
-      <a href="index.html">Home</a>
-      <a href="#">About Us</a>
-      <a href="#">Partner With Us</a>
-    </div>
-    <div class="nav-right">
-      <div id="userMenu">
-        <span id="usernameDisplay"></span>
-        <div class="dropdown">
-          <button class="dropbtn">User ▾</button>
-          <div class="dropdown-content">
-            <a href="#">About User</a>
-            <a href="history.html">History</a>
-            <a href="#" id="logoutBtn">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="history-container">
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+  <main>
     <h1>Your Rental History</h1>
-    <div id="historyList">
-      <!-- Rental records will appear here -->
-    </div>
+    <div id="history-list"></div>
   </main>
-
+  <div id="footer-container"></div>
+  <script type="module" src="scripts/navbar-loader.js"></script>
   <script type="module" src="scripts/history.js"></script>
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
+  </script>
 </body>
 </html>

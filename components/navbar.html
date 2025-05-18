@@ -44,11 +44,7 @@
       openLogin.style.display = 'inline-block';
     }
 
-    // ⬇️ Redirect to login.html on click
-    openLogin.addEventListener('click', function () {
-      window.location.href = 'login.html';
-    });
-
+ 
     // Logout logic
     document.getElementById('logoutBtn').addEventListener('click', function () {
       localStorage.removeItem('user');

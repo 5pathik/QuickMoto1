@@ -5,6 +5,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyBAVYCCyV86Jfljd3lywsqazHenR9tHPdg",
   authDomain: "quickmoto-75b19.firebaseapp.com",

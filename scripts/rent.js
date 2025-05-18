@@ -1,22 +1,20 @@
-import { auth } from './firebase.js';
+import { db, auth } from './firebase.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+import { collection, addDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
+// Get vehicle details from localStorage
 const vehicle = JSON.parse(localStorage.getItem('selectedVehicle'));
 const usernameDisplay = document.getElementById('usernameDisplay');
 const logoutBtn = document.getElementById('logoutBtn');
-const signInBtn = document.getElementById('signInBtn');
-const loginOverlay = document.getElementById('loginOverlay');
+const signInBtn = document.getElementById('openLogin');
 const uploadForm = document.getElementById('uploadForm');
+const rentForm = document.getElementById('rentForm');
 
 const vehicleImage = document.getElementById('vehicleImage');
 const vehicleName = document.getElementById('vehicleName');
 const vehiclePrice = document.getElementById('vehiclePrice');
 const vehicleType = document.getElementById('vehicleType');
 const vehicleLocation = document.getElementById('vehicleLocation');
-
-const authPanel = document.getElementById('authPanel');
-const triggerAuthPanel = document.getElementById('triggerAuthPanel');
-const closeAuthPanel = document.getElementById('closeAuthPanel');
 
 let currentUser = null;
 
@@ -35,61 +33,95 @@ if (vehicle) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
-    usernameDisplay.textContent = user.displayName || "User";
+    usernameDisplay.textContent = user.displayName || user.email || "User";
     logoutBtn.style.display = "inline-block";
     signInBtn.style.display = "none";
-    loginOverlay.classList.add("hidden");
-    authPanel.classList.remove("show");
   } else {
     currentUser = null;
     usernameDisplay.textContent = "";
     logoutBtn.style.display = "none";
     signInBtn.style.display = "inline-block";
-    loginOverlay.classList.remove("hidden");
   }
 });
 
 // Handle logout
-logoutBtn.addEventListener('click', () => {
+logoutBtn?.addEventListener('click', () => {
   auth.signOut();
 });
 
-// Upload form
-uploadForm.addEventListener('submit', (e) => {
+// Handle booking via uploadForm (if present)
+uploadForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   if (!currentUser) {
-    alert("Please log in to continue.");
+    alert("Please sign in to book.");
     return;
   }
+  // Use vehicle details from the page
+  const vehicleVal = vehicleName.textContent;
+  const price = Number(vehiclePrice.textContent.replace(/[^\d]/g, ''));
+  const city = vehicleLocation.textContent;
+  // For demo: today's date as start, tomorrow as end
+  const startDate = new Date().toISOString().slice(0, 10);
+  const endDate = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
 
-  const aadhaar = document.getElementById('aadhaarFile').files[0];
-  const license = document.getElementById('licenseFile').files[0];
-
-  if (!aadhaar || !license) {
-    alert("Please upload both Aadhaar and Driving License.");
-    return;
+  try {
+    await addDoc(collection(db, "rentals"), {
+      userId: currentUser.uid,
+      vehicle: vehicleVal,
+      startDate,
+      endDate,
+      city,
+      price,
+      createdAt: Timestamp.now()
+    });
+    alert("Booking successful! Check your history page.");
+    uploadForm.reset();
+  } catch (err) {
+    alert("Booking failed: " + err.message);
   }
-
-  // Simulated success
-  alert("Booking submitted successfully!");
-  uploadForm.reset();
 });
 
-// ➕ Open slide-in login panel when clicking "Sign In"
-if (triggerAuthPanel && authPanel) {
-  triggerAuthPanel.addEventListener('click', () => {
-    authPanel.classList.add('show');
-    // Do NOT hide the overlay here
-  });
+// Handle booking via rentForm (if present)
+rentForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentUser) {
+    alert("Please sign in to book.");
+    return;
+  }
+  // Get values from your form fields
+  const vehicleVal = document.getElementById('vehicleInput').value;
+  const startDate = document.getElementById('startDateInput').value;
+  const endDate = document.getElementById('endDateInput').value;
+  const city = document.getElementById('cityInput').value;
+  const price = Number(document.getElementById('priceInput').value);
+
+  try {
+    await addDoc(collection(db, "rentals"), {
+      userId: currentUser.uid,
+      vehicle: vehicleVal,
+      startDate,
+      endDate,
+      city,
+      price,
+      createdAt: Timestamp.now()
+    });
+    alert("Rental booked! You can see it in your history.");
+    rentForm.reset();
+  } catch (err) {
+    alert("Booking failed: " + err.message);
+  }
+});
+
+// Auto-fill booking form fields if vehicle is selected
+if (vehicle) {
+  const vehicleInput = document.getElementById('vehicleInput');
+  const cityInput = document.getElementById('cityInput');
+  const priceInput = document.getElementById('priceInput');
+  if (vehicleInput) vehicleInput.value = vehicle.name;
+  if (cityInput) cityInput.value = vehicle.location || '';
+  if (priceInput) priceInput.value = vehicle.price;
 }
 
-// ❌ Close slide-in panel, but keep overlay if not logged in
-if (closeAuthPanel && authPanel) {
-  closeAuthPanel.addEventListener('click', () => {
-    authPanel.classList.remove('show');
-    if (!currentUser) {
-      loginOverlay.classList.remove('hidden');
-    }
-  });
-}
+document.getElementById('triggerAuthPanel')?.addEventListener('click', () => {
+  document.getElementById('authPanel')?.classList.add('show');
+});
