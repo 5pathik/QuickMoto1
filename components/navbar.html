@@ -1,31 +1,58 @@
 <!-- components/navbar.html -->
 <header class="rent-nav">
-    <a href="index.html" class="logo">QuickMoto</a>
-  
-    <nav class="nav-center">
-      <a href="about.html">Home</a>
-      <a href="index.html">Rent</a>
-      <a href="partner.html">Partner With Us</a>
-    </nav>
-  
-    <div class="nav-right">
-      <div id="userMenu" style="display: none;">
-        <span id="usernameDisplay"></span>
-        <div class="dropdown">
-          <button class="dropbtn">User ▾</button>
-          <div class="dropdown-content">
-            <a href="#">About User</a>
-            <a href="history.html">History</a>
-            <a href="#" id="logoutBtn">Logout</a>
-          </div>
+  <a href="index.html" class="logo">QuickMoto</a>
+
+  <nav class="nav-center">
+    <a href="about.html">Home</a>
+    <a href="index.html">Rent</a>
+    <a href="partner.html">Partner With Us</a>
+  </nav>
+
+  <div class="nav-right">
+    <div id="userMenu" style="display: none;">
+      <span id="usernameDisplay"></span>
+      <div class="dropdown">
+        <button class="dropbtn">User ▾</button>
+        <div class="dropdown-content">
+          <a href="#">About User</a>
+          <a href="history.html">History</a>
+          <a href="#" id="logoutBtn">Logout</a>
         </div>
       </div>
-      <button id="openLogin">Sign In</button>
-<div id="userMenu" style="display: none;">
-  Welcome, <span id="usernameDisplay">User</span>
-  <button id="logoutBtn">Logout</button>
-</div>
-
     </div>
-  </header>
-  
+
+    <!-- Sign In Button -->
+    <button id="openLogin">Sign In</button>
+  </div>
+</header>
+
+<!-- Script for Login Redirect -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const userMenu = document.getElementById('userMenu');
+    const openLogin = document.getElementById('openLogin');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+
+    const userData = JSON.parse(localStorage.getItem('user'));
+
+    if (userData && userData.name) {
+      usernameDisplay.textContent = userData.name;
+      userMenu.style.display = 'block';
+      openLogin.style.display = 'none';
+    } else {
+      userMenu.style.display = 'none';
+      openLogin.style.display = 'inline-block';
+    }
+
+    // ⬇️ Redirect to login.html on click
+    openLogin.addEventListener('click', function () {
+      window.location.href = 'login.html';
+    });
+
+    // Logout logic
+    document.getElementById('logoutBtn').addEventListener('click', function () {
+      localStorage.removeItem('user');
+      window.location.reload();
+    });
+  });
+</script>
