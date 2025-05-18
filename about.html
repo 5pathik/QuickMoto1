@@ -7,8 +7,9 @@
 
   <link rel="stylesheet" href="styles/auth.css" />
   <link rel="stylesheet" href="styles/index.css" />
-  <link rel="stylesheet" href="styles/about.css" />
+
   <link rel="stylesheet" href="styles/style.css"/>
+    <link rel="stylesheet" href="styles/about.css" />
 
   <script src="scripts/load-auth.js"></script>
 </head>
@@ -16,20 +17,20 @@
   <!-- Navbar -->
   <div id="navbar-container"></div>
 
-  <header style="text-align: center; padding-top: 2rem;">
-    <h1 style="font-size: 3rem; color: #007bff; font-weight: bold;">QuickMoto Rentals</h1>
+  <!-- Main Heading -->
+  <header class="about-main-header">
+    <h1>QuickMoto Rentals</h1>
+    <p>Your trusted partner for two-wheeler rentals</p>
   </header>
   
-  
+  <!-- About Section -->
   <section class="about-section">
-    <div class="about-image-grid">
-      <div class="image-column">
-        <img src="source/176e142c310ba40fc146742867499657.jpg" alt="Scooter" />
-        <!-- cna you put this on right  -->
+    <div class="about-flex">
+      <div class="about-img-col">
+        <img src="source/176e142c310ba40fc146742867499657.jpg" alt="Scooter" class="large-img" />
       </div>
-      <div class="about-content"> 
-        <!-- and this dive on this side of image  -->
-        <h1>About QuickMoto</h1> 
+      <div class="about-content">
+        <h2>About QuickMoto</h2>
         <p>
           At QuickMoto Rentals, we're passionate about making urban travel easier, faster, and more fun.
           Whether you're exploring a new city or commuting to work, our fleet of bikes and scooters gives you freedom on your terms.
@@ -39,34 +40,34 @@
           Safety, convenience, and sustainability are at the heart of everything we do.
         </p>
       </div>
-      <div class="image-column">
+      <div class="about-img-col">
         <img src="source/da880262833f3bea2e3b4c6f460ffa4e.jpg" alt="Scooter" />
         <img src="source/aee0daa55b1609a6858bd022b562b347.jpg" alt="Scooty Rental" />
       </div>
     </div>
-
   </section>
   
   <!-- Mission Section -->
   <section class="about-mission">
-    <div class="mission-image-grid">
-      <div class="image-column">
+    <div class="about-flex reverse">
+      <div class="about-img-col">
         <img src="source/6ed0295b6c69f12618d1a1d1b793b3b5.jpg" alt="Scooter Trust" />
         <img src="source/bc840d35e4ebb8259899cd71ee74a26f.jpg" alt="Scooter Trust" />
       </div>
-      <div class="about-text">
+      <div class="about-content left-align">
         <h2>Our Mission</h2>
         <p>
-          We aim to make people's lives easier by simplifying scooty rentals.
+          We aim to make people's lives easier by simplifying scooty rentals.<br>
           Trust is at the heart of our platform—whether you're a rider or a rental owner, we've built QuickMoto as a win-win solution for everyone.
         </p>
       </div>
-      <div class="image-column">
+      <div class="about-img-col">
         <img src="source/cbbb12e8ea2a0320e0ac250d6cd049ca.jpg" alt="Scooter Trust" />
         <img src="source/b085d3301e224636614d196854fa7d7f.jpg" alt="Scooter Trust" />
       </div>
     </div>
   </section>
+
   <!-- Reviews Section -->
   <section class="reviews-section">
     <h2>User Reviews</h2>
@@ -87,27 +88,25 @@
   </section>
 
   <!-- Submit Review -->
-<section class="submit-review" id="submit-review">
-  <h3>Have feedback? We’d love to hear it!</h3>
-  <p>You can submit your review using the Google Form below. Your voice helps us grow!</p>
-  <button 
-    onclick="window.open('https://forms.gle/YOUR_FORM_LINK_HERE', '_blank')" 
-    aria-label="Submit your review via Google Form">
-    Submit a Review
-  </button>
+  <section class="submit-review" id="submit-review">
+    <h3>Have feedback? We’d love to hear it!</h3>
+    <p>You can submit your review using the Google Form below. Your voice helps us grow!</p>
+    <button 
+      onclick="window.open('https://forms.gle/YOUR_FORM_LINK_HERE', '_blank')" 
+      aria-label="Submit your review via Google Form">
+      Submit a Review
+    </button>
+  </section>
 
-
-
-  
-
-</section>
   <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2025 QuickMoto Rentals. All rights reserved.</p>
-  </footer>
-  <script type="module" src="scripts/load-auth.js"></script>
+  <div id="footer-container"></div>
   <script src="scripts/navbar-loader.js"></script>
-
-
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
+  </script>
 </body>
 </html>
