@@ -1,59 +1,70 @@
-/*about.css
-/* Common Section Style */
+:root {
+  --primary-color: #007bff;
+  --text-dark: #1e1e1e;
+  --text-light: #555;
+  --bg-light: #f9f9f9;
+  --bg-white: #ffffff;
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --transition-fast: 0.3s ease-in-out;
+  --rounded: 16px;
+}
+
+/* Overall container padding */
 .about-section,
 .about-mission {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
   padding: 4rem 2rem;
-  gap: 2rem;
+  flex-wrap: wrap;
+  background-color: var(--bg-light);
 }
 
-/* Section with Image on Left */
-.about-section {
-  flex-direction: row;
-  background-color: #f9f9f9;
-}
-
-/* Section with Image on Right */
 .about-mission {
+  background-color: var(--bg-white);
   flex-direction: row-reverse;
-  background-color: #ffffff;
 }
 
-.about-image,
-.mission-image {
-  flex: 1 1 45%;
-  text-align: center;
-}
-
-.about-image img,
-.mission-image img {
-  width: 100%;
-  max-width: 450px;
-  border-radius: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
+/* Image and Text Layout */
 .about-content,
 .about-text {
-  flex: 1 1 50%;
-  padding: 0 1rem;
+  flex: 1 1 500px;
+  padding: 1rem;
 }
 
 .about-content h1,
 .about-text h2 {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   margin-bottom: 1rem;
-  color: #1e1e1e;
+  color: var(--text-dark);
+  font-weight: bold;
 }
 
 .about-content p,
 .about-text p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #444;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+/* Image Columns */
+.image-column {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.image-column img {
+  width: 100%;
+  max-width: 260px;
+  border-radius: var(--rounded);
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-fast);
+}
+
+.image-column img:hover {
+  transform: scale(1.03);
 }
 
 /* Reviews Section */
@@ -64,8 +75,8 @@
 }
 
 .reviews-section h2 {
-  font-size: 2.2rem;
-  color: #333;
+  font-size: 2.4rem;
+  color: #222;
   margin-bottom: 2rem;
 }
 
@@ -73,92 +84,69 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .review-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  width: 280px;
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: var(--rounded);
+  box-shadow: var(--card-shadow);
+  width: 300px;
   font-style: italic;
   text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Review Submission */
 .submit-review {
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   text-align: center;
   background-color: #fff;
 }
 
 .submit-review h3 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
-  color: #222;
+  color: var(--text-dark);
 }
 
 .submit-review p {
-  font-size: 1.1rem;
-  color: #444;
+  font-size: 1.2rem;
+  color: var(--text-light);
   margin-bottom: 1.5rem;
 }
 
 .submit-review button {
-  padding: 0.8rem 1.5rem;
-  background-color: #007bff;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--rounded);
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--transition-fast);
 }
 
 .submit-review button:hover {
   background-color: #0056b3;
 }
 
-/* Responsive Layout */
+/* Responsive */
 @media (max-width: 768px) {
   .about-section,
   .about-mission {
-    flex-direction: column !important;
-    text-align: center;
-  }
-
-  .about-image,
-  .mission-image,
-  .about-content,
-  .about-text {
-    flex: 1 1 100%;
-    max-width: 100%;
-    padding: 0;
-  }
-
-  .about-image img,
-  .mission-image img {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  .reviews-container {
     flex-direction: column;
     align-items: center;
   }
-}
-.about-image img,
-.mission-image img {
-  transition: transform 0.3s ease;
-}
 
-.about-image img:hover,
-.mission-image img:hover {
-  transform: scale(1.02);
-}
-.review-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s, box-shadow 0.3s;
+  .image-column img {
+    max-width: 90%;
+  }
 }

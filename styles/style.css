@@ -99,4 +99,28 @@
   #openSignup:hover {
     background: #007f72;
   }
+  .auth-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .auth-panel.show {
+    display: flex;
+  }
+  .auth-panel {
+    display: none;
+    /* other styling... */
+  }
+  
+  .auth-panel.show {
+    display: block;
+  }
   
