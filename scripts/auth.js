@@ -1,4 +1,5 @@
 // scripts/auth.js
+
 import { auth, db } from './firebase.js';
 import {
   createUserWithEmailAndPassword,
@@ -6,15 +7,14 @@ import {
   signOut,
   onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+
 import {
   doc,
   setDoc,
   getDoc
 } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
-export function initAuth() {
-  console.log("Auth.js initialized");
-
+document.addEventListener('DOMContentLoaded', () => {
   const openLoginBtn = document.getElementById('openLogin');
   const authPanel = document.getElementById('authPanel');
   const loginPanel = document.getElementById('loginPanel');
@@ -28,25 +28,19 @@ export function initAuth() {
   const userMenu = document.getElementById('userMenu');
   const logoutBtn = document.getElementById('logoutBtn');
 
-  // Defensive check: some elements may be missing if not on certain pages
-  if (!openLoginBtn || !authPanel || !loginPanel || !signupPanel || !closeAuthPanelBtn) {
-    console.warn("Auth elements missing, skipping auth init");
-    return;
-  }
-
-  // Open login panel
-  openLoginBtn.addEventListener('click', () => {
+  // Show auth panel
+  openLoginBtn?.addEventListener('click', () => {
     authPanel.classList.add('show');
     loginPanel.style.display = 'block';
     signupPanel.style.display = 'none';
   });
 
-  // Close auth panel
-  closeAuthPanelBtn.addEventListener('click', () => {
+  // Hide auth panel
+  closeAuthPanelBtn?.addEventListener('click', () => {
     authPanel.classList.remove('show');
   });
 
-  // Switch between login/signup
+  // Switch panels
   switchToSignup?.addEventListener('click', () => {
     loginPanel.style.display = 'none';
     signupPanel.style.display = 'block';
@@ -57,7 +51,7 @@ export function initAuth() {
     loginPanel.style.display = 'block';
   });
 
-  // Handle signup
+  // Signup
   signupForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value.trim();
@@ -78,7 +72,7 @@ export function initAuth() {
     }
   });
 
-  // Handle login
+  // Login
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim();
@@ -96,13 +90,13 @@ export function initAuth() {
     }
   });
 
-  // Handle logout
+  // Logout
   logoutBtn?.addEventListener('click', async () => {
     await signOut(auth);
-    location.reload(); // Refresh page on logout
+    location.reload();
   });
 
-  // Watch auth state
+  // Auth state listener
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -116,4 +110,4 @@ export function initAuth() {
       openLoginBtn.style.display = 'inline-block';
     }
   });
-}
+});
