@@ -115,6 +115,7 @@ export function initAuth() {
       }
       authPanel.classList.remove('show');
       loginForm.reset();
+      alert("Thank you for logging in! It helps us serve you better.");
     } catch (error) {
       alert("Login failed: " + error.message);
     }
@@ -141,6 +142,15 @@ export function initAuth() {
     } else {
       if (userMenu) userMenu.style.display = 'none';
       if (openLoginBtn) openLoginBtn.style.display = 'inline-block';
+    }
+  });
+
+  // Example: after user logs in
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById('nameInput').value = user.displayName || '';
+      document.getElementById('emailInput').value = user.email || '';
+      // If you store phone in user profile, use user.phoneNumber
     }
   });
 }

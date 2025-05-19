@@ -1,6 +1,6 @@
 import { db, auth } from './firebase.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { collection, addDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { collection, addDoc, Timestamp, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
 // Get vehicle details from localStorage
 const vehicle = JSON.parse(localStorage.getItem('selectedVehicle'));
@@ -44,6 +44,31 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+// Example: after user logs in
+auth.onAuthStateChanged(async user => {
+  if (user) {
+    // Fetch user details from Firestore
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      document.getElementById('nameInput').value = data.name || '';
+      document.getElementById('emailInput').value = data.email || '';
+      document.getElementById('phoneInput').value = data.phone || '';
+    } else {
+      // Fallback to auth info
+      document.getElementById('nameInput').value = user.displayName || '';
+      document.getElementById('emailInput').value = user.email || '';
+      document.getElementById('phoneInput').value = user.phoneNumber || '';
+    }
+
+    // Auto-fill date fields with today and tomorrow
+    const today = new Date().toISOString().slice(0, 10);
+    const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+    document.getElementById('startDateInput').value = today;
+    document.getElementById('endDateInput').value = tomorrow;
+  }
+});
+
 // Handle logout
 logoutBtn?.addEventListener('click', () => {
   auth.signOut();
@@ -84,32 +109,22 @@ uploadForm?.addEventListener('submit', async (e) => {
 // Handle booking via rentForm (if present)
 rentForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (!currentUser) {
-    alert("Please sign in to book.");
-    return;
-  }
-  // Get values from your form fields
-  const vehicleVal = document.getElementById('vehicleInput').value;
+
+  // Show thank you popup
+  alert("Thank you for booking! You will receive your vehicle registration number on WhatsApp shortly.");
+
+  // Collect booking details from the form
+  const name = document.getElementById('nameInput').value;
+  const phoneNum = document.getElementById('phoneInput').value;
   const startDate = document.getElementById('startDateInput').value;
   const endDate = document.getElementById('endDateInput').value;
-  const city = document.getElementById('cityInput').value;
-  const price = Number(document.getElementById('priceInput').value);
 
-  try {
-    await addDoc(collection(db, "rentals"), {
-      userId: currentUser.uid,
-      vehicle: vehicleVal,
-      startDate,
-      endDate,
-      city,
-      price,
-      createdAt: Timestamp.now()
-    });
-    alert("Rental booked! You can see it in your history.");
-    rentForm.reset();
-  } catch (err) {
-    alert("Booking failed: " + err.message);
-  }
+  // WhatsApp message
+  const phone = "919690914381"; // Your WhatsApp number
+  const message = encodeURIComponent(
+    `Hello QuickMoto,\nI have booked a vehicle.\n\nBooking Details:\nName: ${name}\nPhone: ${phoneNum}\nStart Date: ${startDate}\nEnd Date: ${endDate}\n\nCan you please send me the payment link?`
+  );
+  window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
 });
 
 // Auto-fill booking form fields if vehicle is selected

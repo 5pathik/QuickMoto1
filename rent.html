@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles/index.css" />
   <link rel="stylesheet" href="styles/rent.css" />
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
 </head>
 <body>
   <div class="page-wrapper">
@@ -26,7 +27,18 @@
         </section>
         <section class="booking-card card">
           <form id="rentForm" class="booking-form">
-            <!-- Example fields -->
+            <label>
+              Name:
+              <input id="nameInput" type="text" required />
+            </label>
+            <label>
+              Email:
+              <input id="emailInput" type="email" required />
+            </label>
+            <label>
+              Phone:
+              <input id="phoneInput" type="tel" required />
+            </label>
             <label>
               Start Date:
               <input id="startDateInput" type="date" required />
@@ -37,6 +49,14 @@
             </label>
             <button type="submit">Book Now</button>
           </form>
+          <div class="whatsapp-btn-box">
+            <button
+              onclick="window.open('https://wa.me/91YOURNUMBER?text=I%20want%20to%20book%20a%20vehicle%20from%20QuickMoto', '_blank')"
+              class="whatsapp-btn"
+            >
+              Book Now on WhatsApp
+            </button>
+          </div>
         </section>
       </div>
     </main>

@@ -92,7 +92,7 @@
     <h3>Have feedback? We’d love to hear it!</h3>
     <p>You can submit your review using the Google Form below. Your voice helps us grow!</p>
     <button 
-      onclick="window.open('https://forms.gle/YOUR_FORM_LINK_HERE', '_blank')" 
+      onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfIsQFMyxZPKbnJm4OGtFPYyVpSqw_fS6a5nwT3P1J3xloTTw/viewform?usp=sharing&ouid=106156576958478514352', '_blank')" 
       aria-label="Submit your review via Google Form">
       Submit a Review
     </button>
@@ -102,7 +102,7 @@
   <div id="footer-container"></div>
   <script src="scripts/navbar-loader.js"></script>
   <script>
-    fetch("footer.html")
+    fetch("components/footer.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer-container").innerHTML = data;

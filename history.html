@@ -6,6 +6,7 @@
   <title>Rental History</title>
   <link rel="stylesheet" href="styles/history.css">
   <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/auth.css">
 </head>
 <body>
   <!-- Navbar -->
@@ -18,7 +19,7 @@
   <script type="module" src="scripts/navbar-loader.js"></script>
   <script type="module" src="scripts/history.js"></script>
   <script>
-    fetch("footer.html")
+    fetch("components/footer.html")
       .then(res => res.text())
       .then(data => {
         document.getElementById("footer-container").innerHTML = data;
