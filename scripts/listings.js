@@ -2,13 +2,20 @@ import { db } from './firebase.js';
 import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
 const fleetItemsContainer = document.getElementById('fleet-items');
+let allFleetDocs = [];
 
-async function loadFleet() {
+async function loadFleet(selectedType = "all") {
   try {
-    const querySnapshot = await getDocs(collection(db, "listings"));
+    if (allFleetDocs.length === 0) {
+      const querySnapshot = await getDocs(collection(db, "listings"));
+      allFleetDocs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+    let filteredDocs = allFleetDocs;
+    if (selectedType !== "all") {
+      filteredDocs = allFleetDocs.filter(doc => doc.type === selectedType);
+    }
     let html = '';
-    querySnapshot.forEach(doc => {
-      const data = doc.data();
+    filteredDocs.forEach(data => {
       html += `
         <div class="fleet-card">
           <img src="${data.image}" alt="${data.name}" class="fleet-img" />
@@ -16,7 +23,7 @@ async function loadFleet() {
           <p>Type: ${data.type}</p>
           <p>Location: ${data.location}</p>
           <p>Price: ₹${data.price}</p>
-          <button class="rent-btn" data-id="${doc.id}">Rent Now</button>
+          <button class="rent-btn" data-id="${data.id}">Rent Now</button>
         </div>
       `;
     });
@@ -26,12 +33,9 @@ async function loadFleet() {
     document.querySelectorAll('.rent-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const docId = btn.getAttribute('data-id');
-        // Find the vehicle data from the querySnapshot
-        const docData = Array.from(querySnapshot.docs).find(d => d.id === docId)?.data();
+        const docData = allFleetDocs.find(d => d.id === docId);
         if (docData) {
-          // Save to localStorage
           localStorage.setItem('selectedVehicle', JSON.stringify(docData));
-          // Redirect to rent.html
           window.location.href = 'rent.html';
         }
       });
@@ -42,4 +46,18 @@ async function loadFleet() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadFleet);
+document.addEventListener('DOMContentLoaded', () => {
+  loadFleet();
+
+  // Filter button logic
+  document.querySelectorAll('.filter-tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active class from all buttons
+      document.querySelectorAll('.filter-tabs button').forEach(b => b.classList.remove('active'));
+      // Add active class to clicked button
+      btn.classList.add('active');
+      const type = btn.getAttribute('data-filter');
+      loadFleet(type);
+    });
+  });
+});
